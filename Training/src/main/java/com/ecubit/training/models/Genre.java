@@ -23,7 +23,7 @@ public class Genre {
     @Column(name = "type_genre")
     private String typeGenre;
 
-   @ManyToMany(fetch = FetchType.LAZY,
+   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,
            mappedBy = "genres")
    private List<Movie> movies= new ArrayList<>();
 

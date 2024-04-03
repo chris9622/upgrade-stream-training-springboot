@@ -83,13 +83,12 @@ public class MovieServiceImpl implements MovieService {
               }
               movie.setDirectors(directorList);
 
-               Movie movieTosaved = movieRepository.save(movie);
+              movieRepository.save(movie);
 
            }
 
         } catch (Exception e) {
             log.error("Si è verificato un errore durante l'inserimento dei film: " + e.getMessage());
-            throw new RuntimeException("Errore durante l'inserimento dei film", e);
         }
     }
 
@@ -98,23 +97,21 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> getMovieByYear()  {
         try {
-            List<Movie> output = new ArrayList<>();
-            output.addAll(movieRepository.findAllByOrderByYearAsc());
-            return output;
+            return new ArrayList<>(movieRepository.findAllByOrderByYearAsc());
         }catch (Exception e){
-            throw e;
+            log.error("Si è verificato un errore durante il caricamentro dei film dei film: " + e.getMessage());
         }
+        return new ArrayList<>();
     }
 
     @Override
     public List<Movie> getMovieByTitle() {
         try {
-            List<Movie> output= new ArrayList<>();
-            output.addAll(movieRepository.findAllByOrderByTitleAsc());
-                    return output;
+            return new ArrayList<>(movieRepository.findAllByOrderByTitleAsc());
         }catch (Exception e){
-            throw e;
+            log.error("Si è verificato un errore nella ricerca dei film in ordine decrescente: " + e.getMessage());
         }
+        return new ArrayList<>();
     }
 
     @Override
@@ -122,8 +119,9 @@ public class MovieServiceImpl implements MovieService {
         try{
             return movieRepository.findAllByOrderByRatingAndTitleAsc();
         }catch (Exception e){
-            throw e;
+            log.error("Si è verificato un errore nella ricerca dei film in ordine crescente: " + e.getMessage());
         }
+        return new ArrayList<>();
     }
 
     @Override
@@ -131,8 +129,9 @@ public class MovieServiceImpl implements MovieService {
         try{
             return movieRepository.findAllByOrderByDurationAndByYear();
         }catch (Exception e){
-            throw e;
+            log.error("Si è verificato un errore nella ricerca dei film per durata e anno: " + e.getMessage());
         }
+        return new ArrayList<>();
     }
 
 
